@@ -7,7 +7,38 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <header>
+        <div class="header-container">
+            <h1 class="header-text">Welcome to Tic Tac Toe game!</h1>
+            <div class="form-container">
+                <form action="#" method="get">
+                    <div class="input-wrapper">
+                        <label for="name">Enter your name:</label>
+                        <input type="text" name="name" id="name" placeholder="Enter your name">
+                    </div>
+                    <button type="submit" class="submit-btn">Submit name</button>
+                </form>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="main-container">
+            <button class="start-game-btn">Start Game</button>
+            <div class="game-info"></div>
+            <div class="grid-container">
+                <div class="grid top-grid"></div>
+                <div class="grid top-grid"></div>
+                <div class="grid top-grid"></div>
+                <div class="grid middle-grid"></div>
+                <div class="grid middle-grid"></div>
+                <div class="grid middle-grid"></div>
+                <div class="grid footer-grid"></div>
+                <div class="grid footer-grid"></div>
+                <div class="grid footer-grid"></div>
+            </div>
+        </div>
+        <button class="reset-game-btn">Reset Game</button>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>
