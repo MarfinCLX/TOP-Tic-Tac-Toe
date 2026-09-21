@@ -1,4 +1,5 @@
 const form = document.querySelector('form');
+const inputWrapper = document.querySelector('.input-wrapper');
 const input = document.querySelector('.input');
 const submitBtn = document.querySelector('.submit-btn');
 
@@ -11,9 +12,9 @@ form.addEventListener('submit', e => {
     const playerName = input.value;
 
     if (input.disabled) {
-        input.classList.add('input-locked');
+        inputWrapper.classList.add('input-locked');
     } else {
-        input.classList.remove('input-locked');
+        inputWrapper.classList.remove('input-locked');
     }
 
     if (submitBtn.disabled) {
@@ -22,5 +23,11 @@ form.addEventListener('submit', e => {
         submitBtn.classList.remove('disabled-btn');
     }
 
+    //  if (input.validity.typeMismatch) {
+    // input.setCustomValidity("I am expecting an email address!");
+    // } else {
+    // input.setCustomValidity("");
+    // }
+    
     console.log(playerName)
 })
