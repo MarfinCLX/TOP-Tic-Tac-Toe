@@ -87,10 +87,10 @@ input::placeholder {
     height: 23px;
     background-size: contain;
     background-repeat: no-repeat;
-    animation: locked-svg 0.2s ease;
+    animation: locked-input-svg 0.2s ease;
 }
 
-@keyframes locked-svg {
+@keyframes locked-input-svg {
     from {
         opacity: 0;
     }
@@ -105,7 +105,7 @@ input::placeholder {
     margin-top: 15px;
 }
 
-.submit-btn {
+.submit-btn, .reset-name-btn {
     position: relative;
     padding: 15px 25px;
     border: none;
@@ -116,33 +116,36 @@ input::placeholder {
     transition: all 0.25s ease;
 }
 
-.submit-btn:hover {
+.reset-name-btn {
+    margin-left: 20px;
+}
+
+.submit-btn:hover, .reset-name-btn:hover {
     transform: scale(1.005);
     box-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
 }
 
-.submit-btn:active {
+.submit-btn:active, .reset-name-btn:active {
     transform: scale(0.98);
     box-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
 }
 
-.submit-btn:hover:disabled, .submit-btn:active:disabled {
+.submit-btn:hover:disabled, .reset-name-btn:hover:disabled, .submit-btn:active:disabled, .reset-name-btn:active:disabled {
     transform: none;
-    box-shadow: none;
 }
 
-.submit-btn:disabled {
+.submit-btn:disabled, .reset-name-btn:disabled {
     border: 1.5px solid red;
     box-shadow: 0 0 7px rgba(255, 0, 0, 0.5);
     color: rgba(0, 0, 0, 0.4);
 }
 
-.submit-btn.disabled-btn {
+.submit-btn.disabled-btn, .reset-name-btn.disabled-btn {
     padding-right: 52px;
     text-align: center;
 }
 
-.submit-btn.disabled-btn::after {
+.submit-btn.disabled-btn::after, .reset-name-btn.disabled-btn::after {
     content: '';
     background-image: url("images/locked.svg");
     display: block;
@@ -154,4 +157,35 @@ input::placeholder {
     height: 24px;
     background-size: contain;
     background-repeat: no-repeat;
+    animation: locked-btn-svg 0.2s ease;
+}
+
+@keyframes locked-btn-svg {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    margin-top: 30px;
+}
+
+.game-grid {
+    background-color: grey;
+    width: 300px;
+    height: 300px;
+    border: 1px solid red;
 }
