@@ -43,3 +43,7 @@ resetNameBtn.addEventListener('click', () => {
 
     input.focus();
 });
+
+const resetGameBtn = document.querySelector('.reset-game-btn')
+resetGameBtn.disabled = true;
+resetGameBtn.classList.toggle('disabled-btn', resetGameBtn.disabled);
