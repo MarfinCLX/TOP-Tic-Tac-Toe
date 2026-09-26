@@ -24,15 +24,12 @@ resetNameBtn.classList.toggle('disabled-btn', resetNameBtn.disabled);
 form.addEventListener('submit', e => {
     e.preventDefault();
 
-    const playerName = input.value;
-
     input.disabled = true;
     inputWrapper.classList.add('input-locked');
 
     updateButtonState(submitNameBtn, true);
     updateButtonState(resetNameBtn, false);
 
-    console.log(playerName);
 });
 
 resetNameBtn.addEventListener('click', () => {
@@ -50,8 +47,6 @@ resetNameBtn.addEventListener('click', () => {
 const resetGameBtn = document.querySelector('.reset-game-btn')
 resetGameBtn.disabled = true;
 resetGameBtn.classList.toggle('disabled-btn', resetGameBtn.disabled);
-
-// const gameInfo = document.querySelector('.game-info');
 
 function createGameBoard () {
     const board = ["", "", "", "", "", "", "", "", ""];
@@ -78,7 +73,9 @@ function createGameBoard () {
     }
 }
 
-function playerName (name, operator) {
+const game = createGameBoard();
+
+function createPlayerName (name, operator) {
     return { name, operator };
 }
 
@@ -93,4 +90,44 @@ const winningCombinations = [
     [2, 4, 6]
 ];
 
-const checkCombinations = winningCombinations.some(e => board[e[0]] !== "" && board[e[0]] === board[e[1]] && board[e[1]] === board[e[2]]);
+function checkCombinations (board) {
+    return winningCombinations.some(e => {
+        return board[e[0]] !== "" && board[e[0]] === board[e[1]] && board[e[1]] === board[e[2]];
+    });
+}
+
+function createGameController (firstPlayer, secondPlayer) {
+    const board = createGameBoard();
+
+    let currentPlayer = firstPlayer;
+
+    const switchPlayer = () => {
+        currentPlayer = currentPlayer === firstPlayer ? secondPlayer : firstPlayer;
+    };
+
+    const playRound = index => {
+        board.makeMove(index, currentPlayer.operator);
+
+        if (checkCombinations(board.getBoard())) {
+            console.log(`${currentPlayer} wins!`);
+            return;
+        };
+        switchPlayer();
+    };
+
+    const getCurrentPlayer = () => currentPlayer;
+
+    return {
+        playRound,
+        getBoard: board.getBoard,
+        getCurrentPlayer
+    };
+};
+
+// const p1 = createPlayerName('any', 'o');
+// const p2 = createPlayerName('bot', 'x');
+// const game2 = createGameController(p1, p2);
+
+// game2.playRound(3);
+// console.log(game2.getBoard());
+// console.log(game2.getCurrentPlayer())
