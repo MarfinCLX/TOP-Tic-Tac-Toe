@@ -15,16 +15,6 @@ const player2ResetNameBtn = document.getElementById('player2ResetNameBtn');
 player2ResetNameBtn.disabled = true;
 player2ResetNameBtn.classList.toggle('disabled-btn', player2ResetNameBtn.disabled);
 
-const startGameBtn = document.querySelector('.start-game-btn');
-
-startGameBtn.textContent = "Start Game";
-startGameBtn.classList.toggle('disabled-btn', startGameBtn.disabled);
-
-startGameBtn.addEventListener('click', () => {
-    startGameBtn.textContent = "Game Started!";
-    // updateButtonState(startGameBtn, true)
-})
-
 const updateButtonState = (button, isDisabled) => {
     button.disabled = isDisabled;
     button.classList.toggle('disabled-btn', isDisabled);
@@ -75,6 +65,30 @@ player2ResetNameBtn.addEventListener('click', () => {
 
     player2Input.focus();
 });
+
+const startGameBtn = document.querySelector('.start-game-btn');
+startGameBtn.disabled = true;
+
+startGameBtn.textContent = "Start Game";
+startGameBtn.classList.toggle('disabled-btn', startGameBtn.disabled);
+
+startGameBtn.addEventListener('click', () => {
+    startGameBtn.textContent = "Game Started!";
+    startGameBtn.disabled = true;
+    startGameBtn.classList.toggle('disabled-btn', startGameBtn.disabled);
+});
+
+const updateStartButtonState = () => {
+    const bothFilled = player1Input.value.trim() !== '' && player2Input.value.trim() !== '';
+
+    startGameBtn.disabled = !bothFilled;
+    startGameBtn.classList.toggle('disabled-btn', !bothFilled);
+};
+
+player1Input.addEventListener('input', updateStartButtonState);
+player2Input.addEventListener('input', updateStartButtonState);
+
+updateStartButtonState();
 
 const resetGameBtn = document.querySelector('.reset-game-btn')
 resetGameBtn.disabled = true;
@@ -163,3 +177,54 @@ function createGameController (firstPlayer, secondPlayer) {
 // game2.playRound(3);
 // console.log(game2.getBoard());
 // console.log(game2.getCurrentPlayer())
+
+const circle = 'O';
+const cross = 'X';
+
+let gameController;
+
+startGameBtn.addEventListener('click', () => {
+    if (player1Input.value.trim() !== '' && player2Input.value.trim() !== '') {
+        const player1 = createPlayerName(player1Input.value.trim(), cross);
+        const player2 = createPlayerName(player2Input.value.trim(), circle);
+
+        gameController = createGameController(player1, player2);
+        setInterval(updateCurrentPlayerDisplay, 100);
+    }
+})
+
+const currentPlayerSpan = document.querySelector('.current-player');
+const updateCurrentPlayerDisplay = () => {
+    if (gameController) {
+        const currentPlayer = gameController.getCurrentPlayer();
+        currentPlayerSpan.textContent = `Current Player: ${currentPlayer.name} (${currentPlayer.operator})`;
+    } else {
+        currentPlayerSpan.textContent = '';
+    }
+};
+
+const grid = document.querySelector('.grid');
+grid.addEventListener('click', e => {
+    if (!gameController) return;
+    if (e.target.classList.contains('game-cell')) {
+        const index = parseInt(e.target.dataset.index);
+        console.log(index);
+        gameController.playRound(index);
+        setInterval(updateCurrentPlayerDisplay, 100);
+    }
+
+    // const cell = e.target.closest('.game-cell');
+
+    // if (!cell) return;
+
+    // const index = Number(cell.dataset.index);
+
+    // if (cell.textContent !== '') return;
+
+    // gameController.playRound(index);
+
+    // const currentPlayer = gameController.getCurrentPlayer();
+    // cell.textContent = currentPlayer.operator;
+    // cell.classList.add(currentPlayer.operator === 'x' ? 'cross' : 'circle');
+
+});

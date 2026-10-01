@@ -124,6 +124,11 @@ input::placeholder {
     transition: all 0.25s ease;
 }
 
+.start-game-btn.disabled-btn {
+    padding-right: 25px;
+    text-align: center;
+}
+
 .reset-name-btn {
     margin-left: 20px;
 }
@@ -149,12 +154,16 @@ input::placeholder {
     color: rgba(0, 0, 0, 0.4);
 }
 
+.start-game-btn:disabled {
+    margin-bottom: 10px;
+}
+
 .submit-btn.disabled-btn, .reset-name-btn.disabled-btn, .start-game-btn.disabled-btn, .reset-game-btn.disabled-btn {
     padding-right: 52px;
     text-align: center;
 }
 
-.submit-btn.disabled-btn::after, .reset-name-btn.disabled-btn::after, .start-game-btn.disabled-btn, .reset-game-btn.disabled-btn::after {
+.submit-btn.disabled-btn::after, .reset-name-btn.disabled-btn::after, .start-game-btn.disabled-btn::after, .reset-game-btn.disabled-btn::after {
     content: '';
     background-image: url("images/locked.svg");
     display: block;
@@ -206,8 +215,8 @@ input::placeholder {
 }
 
 .game-cell {
-    width: 300px;
-    height: 275px;
+    width: 275px;
+    height: 250px;
 }
 
 .game-cell.top-cell {
@@ -237,4 +246,27 @@ input::placeholder {
 .game-cell.footer-cell:nth-of-type(8n) {
     border-left: none;
     border-right: none;
+}
+
+.current-player {
+    font-size: 20px;
+    font-weight: 600;
+    color: #101;
+}
+
+.game-cell {
+    display: grid;
+    place-items: center;
+    font-size: 5rem;
+    font-weight: bold;
+    background: #fff;
+    cursor: pointer;
+}
+
+.game-cell.circle {
+    color: #ff6b6b;
+}
+
+.game-cell.cross {
+    color: #4dabf7;
 }
