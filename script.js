@@ -1,8 +1,20 @@
-const form = document.querySelector('form');
-const inputWrapper = document.querySelector('.input-wrapper');
-const input = document.querySelector('.input');
-const submitNameBtn = document.querySelector('.submit-btn');
-const resetNameBtn = document.querySelector('.reset-name-btn');
+const player1Form = document.querySelector('.player1-form');
+
+const player1InputWrapper = document.querySelector('.player1-input-wrapper');
+const player1Input = document.getElementById('player1Input');
+const player1SubmitNameBtn = document.getElementById('player1SubmitBtn');
+const player1ResetNameBtn = document.getElementById('player1ResetNameBtn');
+player1ResetNameBtn.disabled = true;
+player1ResetNameBtn.classList.toggle('disabled-btn', player1ResetNameBtn.disabled);
+
+const player2Form = document.querySelector('.player2-form');
+const player2InputWrapper = document.querySelector('.player2-input-wrapper');
+const player2Input = document.getElementById('player2Input');
+const player2SubmitNameBtn = document.getElementById('player2SubmitBtn');
+const player2ResetNameBtn = document.getElementById('player2ResetNameBtn');
+player2ResetNameBtn.disabled = true;
+player2ResetNameBtn.classList.toggle('disabled-btn', player2ResetNameBtn.disabled);
+
 const startGameBtn = document.querySelector('.start-game-btn');
 
 startGameBtn.textContent = "Start Game";
@@ -18,30 +30,50 @@ const updateButtonState = (button, isDisabled) => {
     button.classList.toggle('disabled-btn', isDisabled);
 };
 
-resetNameBtn.disabled = true;
-resetNameBtn.classList.toggle('disabled-btn', resetNameBtn.disabled);
-
-form.addEventListener('submit', e => {
+player1Form.addEventListener('submit', e => {
     e.preventDefault();
 
-    input.disabled = true;
-    inputWrapper.classList.add('input-locked');
+    player1Input.disabled = true;
+    player1InputWrapper.classList.add('input-locked');
 
-    updateButtonState(submitNameBtn, true);
-    updateButtonState(resetNameBtn, false);
+    updateButtonState(player1SubmitNameBtn, true);
+    updateButtonState(player1ResetNameBtn, false);
 
 });
 
-resetNameBtn.addEventListener('click', () => {
+player1ResetNameBtn.addEventListener('click', () => {
     console.clear();
-    input.value = '';
-    input.disabled = false;
-    inputWrapper.classList.remove('input-locked');
+    player1Input.value = '';
+    player1Input.disabled = false;
+    player1InputWrapper.classList.remove('input-locked');
 
-    updateButtonState(submitNameBtn, false);
-    updateButtonState(resetNameBtn, true);
+    updateButtonState(player1SubmitNameBtn, false);
+    updateButtonState(player1ResetNameBtn, true);
 
-    input.focus();
+    player1Input.focus();
+});
+
+player2Form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    player2Input.disabled = true;
+    player2InputWrapper.classList.add('input-locked');
+
+    updateButtonState(player2SubmitNameBtn, true);
+    updateButtonState(player2ResetNameBtn, false);
+
+});
+
+player2ResetNameBtn.addEventListener('click', () => {
+    console.clear();
+    player2Input.value = '';
+    player2Input.disabled = false;
+    player2InputWrapper.classList.remove('input-locked');
+
+    updateButtonState(player2SubmitNameBtn, false);
+    updateButtonState(player2ResetNameBtn, true);
+
+    player2Input.focus();
 });
 
 const resetGameBtn = document.querySelector('.reset-game-btn')

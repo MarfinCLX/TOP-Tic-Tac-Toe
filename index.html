@@ -11,14 +11,28 @@
         <div class="header-container">
             <h1 class="header-text">Welcome to Tic Tac Toe game!</h1>
             <div class="form-container">
-                <form action="#" method="get">
-                    <div class="input-wrapper">
-                        <label for="name">Enter your name:</label>
-                        <input type="text" name="name" id="name" placeholder="Enter your name" class="input" required>
+                <form action="#" method="get" class="player1-form">
+                <div class="form-container">
+                    <div class="input-wrapper player1-input-wrapper">
+                        <label for="player1Input">Enter first player name:</label>
+                        <input type="text" name="name" id="player1Input" placeholder="Enter first player name" class="input" required>
                     </div>
                     <div class="submit-btn-container">
-                        <button type="submit" class="submit-btn">Submit name</button>
-                        <button type="button" class="reset-name-btn">Reset Name</button>
+                        <button type="submit" class="submit-btn" id="player1SubmitBtn">Submit name</button>
+                        <button type="button" class="reset-name-btn" id="player1ResetNameBtn">Reset Name</button>
+                    </div>
+                </div>
+                </form>
+                <form action="#" method="get" class="player2-form">
+                    <div class="form-container">
+                        <div class="input-wrapper player2-input-wrapper">
+                            <label for="player2Input">Enter second player name:</label>
+                            <input type="text" name="name" id="player2Input" placeholder="Enter second player name" class="input" required>
+                        </div>
+                        <div class="submit-btn-container">
+                            <button type="submit" class="submit-btn" id="player2SubmitBtn">Submit name</button>
+                            <button type="button" class="reset-name-btn" id="player2ResetNameBtn">Reset Name</button>
+                        </div>
                     </div>
                 </form>
             </div>
