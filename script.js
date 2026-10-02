@@ -1,5 +1,6 @@
-const player1Form = document.querySelector('.player1-form');
+// This script.js logic is different from what TOP TIC TAC TOE game logic is. I have created a new logic for the game.
 
+const player1Form = document.querySelector('.player1-form');
 const player1InputWrapper = document.querySelector('.player1-input-wrapper');
 const player1Input = document.getElementById('player1Input');
 const player1SubmitNameBtn = document.getElementById('player1SubmitBtn');
@@ -142,22 +143,37 @@ function checkCombinations (board) {
     });
 }
 
+const currentPlayerSpan = document.querySelector('.current-player');
+
 function createGameController (firstPlayer, secondPlayer) {
     const board = createGameBoard();
 
     let currentPlayer = firstPlayer;
 
+    let gameEnded = false;
+
     const switchPlayer = () => {
         currentPlayer = currentPlayer === firstPlayer ? secondPlayer : firstPlayer;
+        updateCurrentPlayerDisplay();
     };
 
     const playRound = index => {
+        if (gameEnded) {
+            return;
+        }
+
+        if (board.getBoard()[index] !== "") {
+            return;
+        }
+
         board.makeMove(index, currentPlayer.operator);
 
         if (checkCombinations(board.getBoard())) {
-            console.log(`${currentPlayer} wins!`);
+            currentPlayerSpan.textContent = `${currentPlayer.name} wins!`;
+            gameEnded = true;
             return;
-        };
+        }
+
         switchPlayer();
     };
 
@@ -168,15 +184,7 @@ function createGameController (firstPlayer, secondPlayer) {
         getBoard: board.getBoard,
         getCurrentPlayer
     };
-};
-
-// const p1 = createPlayerName('any', 'o');
-// const p2 = createPlayerName('bot', 'x');
-// const game2 = createGameController(p1, p2);
-
-// game2.playRound(3);
-// console.log(game2.getBoard());
-// console.log(game2.getCurrentPlayer())
+}
 
 const circle = 'O';
 const cross = 'X';
@@ -189,11 +197,14 @@ startGameBtn.addEventListener('click', () => {
         const player2 = createPlayerName(player2Input.value.trim(), circle);
 
         gameController = createGameController(player1, player2);
-        setInterval(updateCurrentPlayerDisplay, 100);
-    }
-})
 
-const currentPlayerSpan = document.querySelector('.current-player');
+        resetGameBtn.disabled = false;
+        resetGameBtn.classList.toggle('disabled-btn', resetGameBtn.disabled);
+
+        updateCurrentPlayerDisplay();
+    };
+});
+
 const updateCurrentPlayerDisplay = () => {
     if (gameController) {
         const currentPlayer = gameController.getCurrentPlayer();
@@ -210,21 +221,32 @@ grid.addEventListener('click', e => {
         const index = parseInt(e.target.dataset.index);
         console.log(index);
         gameController.playRound(index);
-        setInterval(updateCurrentPlayerDisplay, 100);
+    }
+    renderBoard();
+});
+
+function renderBoard() {
+    if (!gameController) return;
+        gameController.getBoard().forEach((cell, index) => {
+            const cellElement = document.querySelector(`.game-cell[data-index="${index}"]`);
+            cellElement.textContent = cell;
+            cellElement.classList.remove('cross', 'circle');
+            if (cell === cross) {
+                cellElement.classList.add('cross');
+            } else if (cell === circle) {
+                cellElement.classList.add('circle');
+            }
+        });
     }
 
-    // const cell = e.target.closest('.game-cell');
-
-    // if (!cell) return;
-
-    // const index = Number(cell.dataset.index);
-
-    // if (cell.textContent !== '') return;
-
-    // gameController.playRound(index);
-
-    // const currentPlayer = gameController.getCurrentPlayer();
-    // cell.textContent = currentPlayer.operator;
-    // cell.classList.add(currentPlayer.operator === 'x' ? 'cross' : 'circle');
-
+    resetGameBtn.addEventListener('click', () => {
+    gameController = null;
+    game.clearBoard();
+    renderBoard();
+    currentPlayerSpan.textContent = '';
+    startGameBtn.textContent = "Start Game";
+    startGameBtn.disabled = false;
+    startGameBtn.classList.toggle('disabled-btn', startGameBtn.disabled);
+    resetGameBtn.disabled = true;
+    resetGameBtn.classList.toggle('disabled-btn', resetGameBtn.disabled);
 });
